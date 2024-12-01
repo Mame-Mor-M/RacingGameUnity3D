@@ -60,10 +60,15 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\PassengerController.cs" />
     <Compile Include="Assets\Scripts\CamController.cs" />
+    <Compile Include="Assets\Scripts\ElevatorLift.cs" />
+    <Compile Include="Assets\Scripts\TimerController.cs" />
     <Compile Include="Assets\Scripts\BusStopBehavior.cs" />
     <Compile Include="Assets\Scripts\PickupBehavior.cs" />
     <Compile Include="Assets\Scripts\BusCapacity.cs" />
+    <Compile Include="Assets\Scripts\PassengerText.cs" />
     <Compile Include="Assets\Scripts\BusController.cs" />
+    <Compile Include="Assets\Scripts\EndLevel.cs" />
+    <Compile Include="Assets\Scripts\TrafficController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

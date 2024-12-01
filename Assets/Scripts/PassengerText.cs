@@ -21,7 +21,7 @@ public class PassengerText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        passText.text = ("Passengers: " + busCapacity.capacity/2).ToString();
+        passText.text = ("Passengers: " + busCapacity.passengers/2).ToString();
         
         if(bus.speed < 0)
         {
@@ -35,14 +35,6 @@ public class PassengerText : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            foreach(var busModel in GameObject.FindGameObjectsWithTag("Bus"))
-            {
-                Destroy(busModel.gameObject);
-            }
-            SceneManager.LoadScene("StartScreen");
         }
     }
 }

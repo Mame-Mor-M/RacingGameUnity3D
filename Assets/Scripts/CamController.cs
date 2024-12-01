@@ -11,10 +11,29 @@ public class CamController : MonoBehaviour
     public Vector3 rotOffset;
 
     public Transform carTarget;
+    private bool isFreeRotating;
 
+
+    public float rotationSpeed = 100f;
+    public GameObject rotationPoint;
+    public float shakeIntensity = 0.01f; // Default intensity of screen shake
     void FixedUpdate()
     {
-        FollowTarget();
+
+        if (Input.GetMouseButton(2)) // Middle mouse button pressed
+        {
+            isFreeRotating = true;
+            HandleManualRotation();
+            HandleMovement();
+        }
+        else
+        {
+            isFreeRotating = false;
+            FollowTarget();
+        }
+
+        
+
     }
 
     void FollowTarget()
@@ -29,6 +48,11 @@ public class CamController : MonoBehaviour
         targetPos = carTarget.TransformPoint(moveOffset);
 
         transform.position = Vector3.Lerp(transform.position, targetPos, moveSmoothness * Time.deltaTime);
+        if (targetPos.x - transform.position.x > 7f || targetPos.z - transform.position.z > 7f || targetPos.z - transform.position.z > 7f) // Ensures camera only shakes after a distance of 7 is reached across any axis
+        {
+            AddScreenShake(targetPos);
+        }
+        
     }
 
     void HandleRotation()
@@ -40,5 +64,35 @@ public class CamController : MonoBehaviour
 
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotSmoothness * Time.deltaTime);
     }
+
+
+    void AddScreenShake(Vector3 targetPos)
+    {
+        // Calculate the distance between the camera and the target
+        float distance = Vector3.Distance(transform.position, carTarget.position);
+
+        // Calculate shake magnitude based on distance
+        float currentShakeIntensity = shakeIntensity;
+
+        Vector3 shakeOffset = new Vector3(
+            Random.Range(-currentShakeIntensity, currentShakeIntensity),
+            Random.Range(-currentShakeIntensity, currentShakeIntensity),
+            Random.Range(-currentShakeIntensity, currentShakeIntensity)
+        );
+        transform.position += shakeOffset;
+    }
+
+    void HandleManualRotation()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
+
+        // Rotate the camera around its local axes
+        transform.Rotate(Vector3.up, mouseX, Space.World);       // Horizontal rotation
+        transform.Rotate(Vector3.right, -mouseY, Space.Self);   // Vertical rotation
+    }
+
 }
+
+
 

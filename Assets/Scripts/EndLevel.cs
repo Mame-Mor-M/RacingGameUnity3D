@@ -22,6 +22,10 @@ public class EndLevel : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
+            foreach (var busModel in GameObject.FindGameObjectsWithTag("Bus"))
+            {
+                Destroy(busModel.gameObject);
+            }
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }

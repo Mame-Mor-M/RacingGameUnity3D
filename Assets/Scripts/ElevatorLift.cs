@@ -11,6 +11,7 @@ public class ElevatorLift : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] int startPoint;
     [SerializeField] Transform[] points;
+    private float delay = 3;
 
 
 
@@ -52,9 +53,14 @@ public class ElevatorLift : MonoBehaviour
             {
                 i++;
             }
-        }
+        }delay -= 1 * Time.deltaTime;
         if (canMove){
-            transform.position = Vector3.MoveTowards(transform.position, points[i].position, speed * Time.deltaTime);
+            delay -= 1 * Time.deltaTime;
+            if ( delay <= 0)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, points[i].position, speed * Time.deltaTime);
+            }
+            
         }
     }
 
@@ -65,7 +71,12 @@ public class ElevatorLift : MonoBehaviour
     {
         if (other.gameObject.tag == "Bus")
         {
+            
             canMove = true;
+        }
+        else
+        {
+            delay = 3;
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BusCapacity : MonoBehaviour
 {
-    public int capacity = 0;
+    public int passengers = 0;
     public int addedFromStop = 0;
     public BusStopBehavior stopBehavior;
     public List<GameObject> busStops = new List<GameObject>();
@@ -20,7 +20,7 @@ public class BusCapacity : MonoBehaviour
 
     void DisplayCapacity()
     {
-        Debug.Log("Bus Capacity: " + capacity);
+        Debug.Log("Passengers: " + passengers);
     }
 
     public void OnTriggerEnter(Collider other)
@@ -30,7 +30,8 @@ public class BusCapacity : MonoBehaviour
             stopBehavior.commuters.Remove(other.gameObject);
             other.GetComponent<MeshRenderer>().enabled = false;
 
-            capacity += 1/2;
+            passengers += 1;
+            Destroy(other.gameObject);
         }
         
     }

@@ -7,15 +7,20 @@ public class PickupBehavior : MonoBehaviour
 
     public BusController bus;
     [HideInInspector] public bool stopped;
-    private bool inPickupZone;
+    [HideInInspector] public bool inPickupZone;
+    
     private BusCapacity capacity;
 
     [HideInInspector]public string zoneName;
 
+    public CamController cam;
+    public float pickupOffset;
+    private float baseOffset;
     // Start is called before the first frame update
     void Start()
     {
         capacity = GetComponent<BusCapacity>();
+        baseOffset = cam.moveOffset.x;
     }
 
     // Update is called once per frame
@@ -36,6 +41,11 @@ public class PickupBehavior : MonoBehaviour
             zoneName = other.gameObject.transform.parent.name;
             Debug.Log("IN PICKUP ZONE ' " + zoneName + "'");
         }
+
+        if (other.gameObject.tag == "StopBarriers")
+        {
+            Debug.Log("BRAAAAAAKES!!! CAN'T HIT PASSENGERS, YOU'LL GET FIRED!");
+        }
     }
 
     public void OnTriggerExit(Collider other) {
@@ -55,11 +65,13 @@ public class PickupBehavior : MonoBehaviour
         {
             if(bus.timer <= 0)
             {
+                cam.moveOffset.x = pickupOffset;
                 stopped = true;
                 Debug.Log("CAN PICK UP");
             }
             else
             {
+                cam.moveOffset.x = baseOffset;
                 stopped = false;
             }
         }

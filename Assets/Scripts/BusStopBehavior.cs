@@ -48,9 +48,18 @@ public class BusStopBehavior : MonoBehaviour
     // Update is called once per frame
     void BoardBus()
     {
-        if (pickupBehavior.stopped && this.i < commuters.Count && pickupBehavior.zoneName == this.gameObject.name)
+        if (pickupBehavior.stopped && i < commuters.Count && pickupBehavior.zoneName == this.gameObject.name)
         {
-            commuters[i].transform.Translate(0, 0, - gap);
+            // Get the position of the bus stop
+            Vector3 busStopPosition = pickupBehavior.transform.position;
+
+            // Calculate the direction from the passenger to the bus stop
+            Vector3 directionToBusStop = (busStopPosition - commuters[i].transform.position).normalized;
+
+            // Move the passenger towards the bus stop position
+            float moveSpeed = 700f; // Adjust this value for desired speed
+            commuters[i].transform.position += directionToBusStop * moveSpeed * Time.deltaTime; // Move in the direction toward the bus stop
+
             i++;
         }
         else if(i >= commuters.Count) {

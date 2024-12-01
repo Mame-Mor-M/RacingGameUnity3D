@@ -591,6 +591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAcceleration: 400
+  speed: 0
   brakeAcceleration: 600
   turnSensitivity: 1
   maxSteerAngle: 30
@@ -649,8 +650,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7baf9ec8005e4947a7a8310adb1a27e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capacity: 0
+  passengers: 0
+  addedFromStop: 0
   stopBehavior: {fileID: 5652110322701080824, guid: e6f1e23f689b3594eaa41fecdce086d7, type: 3}
+  busStops: []
 --- !u!1 &5885884916899986123
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,6 +918,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bus: {fileID: 7358198369039130646}
   stopped: 0
+  inPickupZone: 0
+  zoneName: 
 --- !u!65 &8887347840753445968
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ TagManager:
   - Passenger
   - Bus
   - BusStop
+  - StopBarriers
   layers:
   - Default
   - TransparentFX
