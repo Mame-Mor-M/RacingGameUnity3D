@@ -31,7 +31,6 @@ public class BusCapacity : MonoBehaviour
             other.GetComponent<MeshRenderer>().enabled = false;
 
             passengers += 1;
-            Destroy(other.gameObject);
         }
         
     }
