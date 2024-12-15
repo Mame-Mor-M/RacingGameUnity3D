@@ -317,6 +317,7 @@
 "Assets/Scripts/PassengerText.cs"
 "Assets/Scripts/PickupBehavior.cs"
 "Assets/Scripts/TimerController.cs"
+"Assets/Scripts/TrafficController.cs"
 -langversion:9.0
 
 /deterministic
