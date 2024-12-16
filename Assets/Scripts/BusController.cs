@@ -23,6 +23,8 @@ public class BusController : MonoBehaviour
     private float speedFloat;
     public int speed;
     public float brakeAcceleration;
+    private float totalRpm;
+    private float drivenWheelCount;
 
 
     public float turnSensitivity = 1.0f;
@@ -98,14 +100,22 @@ public class BusController : MonoBehaviour
     {
         foreach (var wheel in wheels)
         {
-            if (wheel.axel == Axel.Rear)
-            {
-                wheel.wheelCollider.motorTorque = moveInput * 5000 * maxAcceleration * Time.deltaTime; // Makes bus RWD (Rear-wheel drive)
-                speedFloat = ((wheel.wheelCollider.rpm * 2 + MathF.PI * wheel.wheelCollider.radius) / 60.0f);
-                speed = (int)(speedFloat * 3.6f);
-            }
-           
+   
+            wheel.wheelCollider.motorTorque = moveInput * 5000 * maxAcceleration * Time.deltaTime; // Makes bus RWD (Rear-wheel drive)
+                
+            speedFloat = ((wheel.wheelCollider.rpm * 2 + MathF.PI * wheel.wheelCollider.radius));
+            speed = (int)(speedFloat * 3.6f);
             
+            totalRpm += wheel.wheelCollider.rpm;
+            drivenWheelCount++;
+
+            if (drivenWheelCount > 0)
+            {
+                float averageRpm = totalRpm / drivenWheelCount;
+                float wheelCircumference = 2 * MathF.PI * wheel.wheelCollider.radius;
+                float speedMetersPerSecond = (averageRpm / 60f) * wheelCircumference; // Convert RPM to meters/sec
+                speed = (int)(speedMetersPerSecond * 3.6f); // Convert to km/h
+            }
         }
     }
 
@@ -137,9 +147,14 @@ public class BusController : MonoBehaviour
             {
                 if( wheel.axel == Axel.Rear)
                 {
-                    wheel.wheelCollider.brakeTorque = 7000 * brakeAcceleration * Time.deltaTime;
+                    wheel.wheelCollider.brakeTorque = 700000 * brakeAcceleration * Time.deltaTime;
                 }
-                
+
+                if (wheel.axel == Axel.Front)
+                {
+                    wheel.wheelCollider.brakeTorque = 0.1f * brakeAcceleration * Time.deltaTime;
+                }
+
             }
 
           /*  carLights.isBackLightOn = true;

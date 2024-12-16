@@ -7,27 +7,56 @@ public class BusStopBehavior : MonoBehaviour
 {
     public List<GameObject> commuters = new List<GameObject>();
     private List<GameObject> commuterMeshes = new List<GameObject>();
+    private List<string> commuterType = new List<string>();
     public PickupBehavior pickupBehavior;
     
 
 
     [SerializeField] GameObject passPrefab;
     [SerializeField] GameObject lineStart;
+
+    
     private int gap = 0;
 
     int i = 1;
     // Start is called before the first frame update
     void Start()
     {
+        
+        commuterType.Add("Regular");
+        commuterType.Add("Criminal");
+        commuterType.Add("Security");
+        commuterType.Add("Hooligan");
         i = 1;
-        foreach(var passenger in commuters)
+
+        
+
+        foreach (var passenger in commuters)
         {
-            passPrefab.name = "Passenger " + i;
+            int randomType = Random.Range(0, commuterType.Count);
+            passPrefab.name = commuterType[randomType];
             GameObject newPass = Instantiate(passPrefab, new Vector3(lineStart.transform.position.x, lineStart.transform.position.y, lineStart.transform.position.z + gap), Quaternion.identity);
             newPass.transform.SetParent(this.gameObject.transform);
             gap +=2;
             i++;
-            //commuters = 
+
+            if (passPrefab.name == "Regular")
+            {
+            }
+
+            if (passPrefab.name == "Criminal")
+            {
+            }
+
+            if (passPrefab.name == "Security")
+            {
+            }
+
+            if (passPrefab.name == "Hooligan")
+            {
+
+            }
+
         }
         i = 0;
         commuters = new List<GameObject>();
